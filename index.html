@@ -60,7 +60,10 @@ responsibility for selecting and ordering spare parts.</p>
         <div style="max-width: 350px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff;">
             <h3>Seat assembly - HMI</h3>
             <a href="Lear_01.png" target="_blank">
-                <img src="Lear_01.png" alt="HMI Design" style="width: 100%; border-radius: 5px; cursor: pointer;" title="Click to enlarge">
+                <img src="Lear_01.png" 
+     onclick="openModal('Lear_01.png')" 
+     style="width: 100%; border-radius: 5px; cursor: pointer;" 
+     alt="HMI Design">
             </a>
             <p>Visualization of a seat assembly line. Focused on intuitive UI and dynamic status indicators.</p>
         </div>
@@ -68,7 +71,10 @@ responsibility for selecting and ordering spare parts.</p>
         <div style="max-width: 350px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff;">
             <h3>Seat assembly - PLC</h3>
             <a href="Lear_02.png" target="_blank">
-                <img src="Lear_02.png" alt="PLC Cabinet" style="width: 100%; border-radius: 5px; cursor: pointer;" title="Click to enlarge">
+                <img src="Lear_02.png" 
+     onclick="openModal('Lear_02.png')" 
+     style="width: 100%; border-radius: 5px; cursor: pointer;" 
+     alt="PLC Cabinet">
             </a>
             <p>Control system architecture and cabinet layout for the assembly process.</p>
         </div>
@@ -89,6 +95,26 @@ responsibility for selecting and ordering spare parts.</p>
 <footer>
     <p>&copy; 2026 - Made by GitHub Pages</p>
 </footer>
+<div id="imageModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; cursor: pointer;" onclick="closeModal()">
+    <img id="modalImg" style="max-width: 90%; max-height: 90%; border: 3px solid white; border-radius: 5px;">
+</div>
+<script>
+function openModal(imgSrc) {
+    // 1. Najde modal a obrázek v něm
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    
+    // 2. Nastaví cestu k obrázku (stejnou, na kterou jsi klikl)
+    modalImg.src = imgSrc;
+    
+    // 3. Změní display z 'none' na 'flex', aby se okno objevilo
+    modal.style.display = "flex";
+}
 
+function closeModal() {
+    // Schová okno zpět
+    document.getElementById("imageModal").style.display = "none";
+}
+</script>
 </body>
 </html>
