@@ -23,6 +23,18 @@
                 max-width: 100% !important;
             }
         }
+        /* Výchozí stav: neviditelný a posunutý dolů */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* Stav po zobrazení: viditelný a na svém místě */
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
     </style>
 </head>
 <body>
@@ -37,13 +49,13 @@
     <p>PLC Programmer | WinCC Unified & JavaScript Specialist</p>
 </header>
 
-<section id="about">
+<section id="about" class="reveal">
     <h2>About me</h2>
     <p>I am working on the development and commissioning of automation systems using Siemens PLC and HMI platforms, 
        including system visualization, PLC programming, testing, and on-site startup.</p>
 </section>
 
-<section id="experience">
+<section id="experience" class="reveal">
     <h2>Job experience</h2>
     <ul>
         <li><strong>ICE Industrial services</strong> (05/2025 – Present)
@@ -55,7 +67,7 @@
     </ul>
 </section>
 
-<section id="project-exp">
+<section id="project-exp" class="reveal">
     <h2>Project experience</h2>
     <ul style="list-style-position: inside; padding-left: 0;">
         <li style="margin-bottom: 15px;">
@@ -73,7 +85,7 @@
     </ul>
 </section>
 
-<section id="projects">
+<section id="projects" class="reveal">
     <h2>My Projects</h2>
     <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
         <div style="max-width: 350px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff;">
@@ -89,7 +101,7 @@
     </div>
 </section>
 
-<section id="skills">
+<section id="skills" class="reveal">
     <h2>Technology</h2>
     <div class="skill-tag">TIA Portal</div>
     <div class="skill-tag">Siemens STEP7</div>
@@ -147,6 +159,22 @@ function openModal(imgSrc) {
 function closeModal() {
     document.getElementById("imageModal").style.display = "none";
 }
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        } else {
+            // Pokud chceš, aby to mizelo a znovu se objevovalo při každém scrollu, 
+            // odmaž řádek níže. Jinak se to animuje jen jednou.
+            // entry.target.classList.remove('show');
+        }
+    });
+}, {
+    threshold: 0.1 // Animace se spustí, když je vidět alespoň 10 % sekce
+});
+
+// Najde všechny prvky s třídou .reveal a začne je sledovat
+document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 </script>
 </body>
 </html>
