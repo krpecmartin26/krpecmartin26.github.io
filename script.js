@@ -62,7 +62,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const targetPosition = targetElement.offsetTop - 80; // -80px kvůli sticky menu
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 2500; // RYCHLOST V MILISEKUNDÁCH (1.5 sekundy)
+            const duration = 1800; // RYCHLOST V MILISEKUNDÁCH (1.5 sekundy)
             let start = null;
 
             // Funkce pro plynulý pohyb (Ease-in-out)
