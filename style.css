@@ -5,7 +5,26 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+/* Celá lišta */
+::-webkit-scrollbar {
+    width: 10px;
+}
 
+/* Pozadí lišty */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Ten posuvník (jezdec) */
+::-webkit-scrollbar-thumb {
+    background: #994099;
+    border-radius: 5px;
+}
+
+/* Jezdec při najetí myší */
+::-webkit-scrollbar-thumb:hover {
+    background: #7a337a;
+}
 /* Centrování a vzhled sekcí */
 section {
     max-width: 900px;
