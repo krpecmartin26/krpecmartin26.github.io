@@ -23,7 +23,7 @@ body {
 
 /* Jezdec při najetí myší */
 ::-webkit-scrollbar-thumb:hover {
-    background: #7a337a;
+    background: #005f97;
 }
 /* Centrování a vzhled sekcí */
 section {
@@ -175,7 +175,4 @@ li {
     transform: scale(1.1) translateY(-2px); /* Zvětší se a poskočí nahoru */
     box-shadow: 0 5px 15px rgba(153, 64, 153, 0.4);
     border-color: #ffffff;
-}
-html {
-    scroll-behavior: smooth;
 }

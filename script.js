@@ -51,3 +51,38 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault(); // Zastaví okamžitý skok
+
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            const targetPosition = targetElement.offsetTop - 80; // -80px kvůli sticky menu
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1500; // RYCHLOST V MILISEKUNDÁCH (1.5 sekundy)
+            let start = null;
+
+            // Funkce pro plynulý pohyb (Ease-in-out)
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                const run = ease(progress, startPosition, distance, duration);
+                window.scrollTo(0, run);
+                if (progress < duration) window.requestAnimationFrame(step);
+            }
+
+            // Matematická křivka pro plynulý rozjezd a dojezd
+            function ease(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+
+            window.requestAnimationFrame(step);
+        }
+    });
+});
