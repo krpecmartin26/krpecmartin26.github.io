@@ -3,41 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLC Programátor | Portfolio</title>
+    <title>PLC Programátor | Martin Krpec</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Jednoduchý CSS styl, aby to vypadalo profesionálně */
         body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f4f4; }
         header { background: #994099; color: white; padding: 2rem; text-align: center; }
         section { max-width: 800px; margin: 2rem auto; padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         h2 { color: #004a99; border-bottom: 2px solid #004a99; padding-bottom: 10px; }
-        .skill-tag { background: #ffffff; padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 5px; font-size: 0.9rem; }
-        footer { text-align: center; padding: 2rem; color: #fab700; }
+        .skill-tag { background: #f0f0f0; padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 5px; font-size: 0.9rem; border: 1px solid #ddd; }
+        footer { text-align: center; padding: 2rem; color: #888; }
+        
+        /* Responzivita pro projekty */
         @media (max-width: 600px) {
-    #projects div[style*="display: flex"] {
-        flex-direction: column; /* Vyskládá projekty pod sebe */
-        align-items: center;
-    }
-    
-    #projects div[style*="max-width: 350px"] {
-        max-width: 100% !important; /* Roztáhne kartu na šířku mobilu */
-    }
-}
+            #projects div[style*="display: flex"] {
+                flex-direction: column;
+                align-items: center;
+            }
+            #projects div[style*="max-width: 350px"] {
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <header>
     <h1>Martin Krpec</h1>
     <p>PLC Programmer | WinCC Unified & JavaScript Specialist</p>
-</header>
 </header>
 
 <section id="about">
     <h2>About me</h2>
     <p>I am working on the development and commissioning of automation systems using Siemens PLC and HMI platforms, 
-        including system visualization, PLC programming, testing, and on-site startup.</p>
+       including system visualization, PLC programming, testing, and on-site startup.</p>
 </section>
 
 <section id="experience">
@@ -47,62 +45,42 @@
             <p>SW developer</p>
         </li>
         <li><strong>Bonatrans Group</strong> (05/2021 – 04/2025)
-<p>Fault diagnosis and troubleshooting.
-Device optimization software.
-Cooperation on new projects.
-responsibility for selecting and ordering spare parts.</p>
+            <p>Fault diagnosis and troubleshooting, device optimization software, cooperation on new projects, responsibility for selecting and ordering spare parts.</p>
         </li>
     </ul>
-    </section>
+</section>
 
-<section id="experience">
+<section id="project-exp">
     <h2>Project experience</h2>
     <ul style="list-style-position: inside; padding-left: 0;">
-        
         <li style="margin-bottom: 15px;">
             <strong>ICE Industrial services</strong> (08/2025 – Present)
             <p style="margin: 5px 0 0 20px;">Valeo Rakovník</p>
         </li>
-
         <li style="margin-bottom: 15px;">
             <strong>ICE Industrial services</strong> (06/2025 – 07/2025)
             <p style="margin: 5px 0 0 20px;">Coral printing concrete machine</p>
         </li>
-
         <li style="margin-bottom: 15px;">
             <strong>ICE Industrial services</strong> (05/2025)
             <p style="margin: 5px 0 0 20px;">Lear</p>
         </li>
-        
     </ul>
 </section>
 
 <section id="projects">
     <h2>My Projects</h2>
     <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-        
         <div style="max-width: 350px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff;">
             <h3>Seat assembly - HMI</h3>
-            
-                <img src="Lear_01.png" 
-     onclick="openModal('Lear_01.png')" 
-     style="width: 100%; border-radius: 5px; cursor: pointer;" 
-     alt="HMI Design">
-            </a>
+            <img src="Lear_01.png" onclick="openModal(this.src)" style="width: 100%; border-radius: 5px; cursor: pointer;" alt="HMI Design">
             <p>Visualization of a seat assembly line. Focused on intuitive UI and dynamic status indicators.</p>
         </div>
-
         <div style="max-width: 350px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff;">
             <h3>Seat assembly - PLC</h3>
-    
-                <img src="Lear_02.png" 
-     onclick="openModal('Lear_02.png')" 
-     style="width: 100%; border-radius: 5px; cursor: pointer;" 
-     alt="PLC Cabinet">
-            </a>
+            <img src="Lear_02.png" onclick="openModal(this.src)" style="width: 100%; border-radius: 5px; cursor: pointer;" alt="PLC Cabinet">
             <p>Control system architecture and cabinet layout for the assembly process.</p>
         </div>
-
     </div>
 </section>
 
@@ -118,50 +96,25 @@ responsibility for selecting and ordering spare parts.</p>
 
 <footer id="contact" style="background-color: #f4f4f4; padding: 40px 20px; text-align: center; border-top: 2px solid #673ab7;">
     <h2>Contact Me</h2>
-    <p>Feel free to reach out for collaboration or project inquiries.</p>
-    
     <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;">
-        
-        <a href="https://www.linkedin.com/in/martin-krpec/" target="_blank" style="text-decoration: none; color: #0077b5; font-size: 30px;" title="LinkedIn">
-            <i class="fab fa-linkedin"></i>
-        </a>
-
-        <a href="mailto:krpecmartin26@gmail.com" style="text-decoration: none; color: #d44638; font-size: 30px;" title="Email">
-            <i class="fas fa-envelope"></i>
-        </a>
-
-        <a href="https://wa.me/420737933650" target="_blank" style="text-decoration: none; color: #25d366; font-size: 30px;" title="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-
-        <a href="https://www.facebook.com/profile.php?id=61555037739893" target="_blank" style="text-decoration: none; color: #1877f2; font-size: 30px;" title="Facebook">
-            <i class="fab fa-facebook"></i>
-        </a>
-
+        <a href="https://www.linkedin.com/in/martin-krpec/" target="_blank" style="color: #0077b5; font-size: 30px;"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:krpecmartin26@gmail.com" style="color: #d44638; font-size: 30px;"><i class="fas fa-envelope"></i></a>
+        <a href="https://wa.me/420737933650" target="_blank" style="color: #25d366; font-size: 30px;"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61555037739893" target="_blank" style="color: #1877f2; font-size: 30px;"><i class="fab fa-facebook"></i></a>
     </div>
-    
-    <p style="margin-top: 30px; font-size: 14px; color: #888;">&copy; 2024 Martin Krpec - Built with GitHub Pages</p>
+    <p style="margin-top: 30px; font-size: 14px; color: #888;">&copy; 2026 Martin Krpec - Built with GitHub Pages</p>
 </footer>
-
 
 <div id="imageModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; cursor: pointer;" onclick="closeModal()">
     <img id="modalImg" style="max-width: 90%; max-height: 90%; border: 3px solid white; border-radius: 5px;">
 </div>
+
 <script>
 function openModal(imgSrc) {
-    // 1. Najde modal a obrázek v něm
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImg");
-    
-    // 2. Nastaví cestu k obrázku (stejnou, na kterou jsi klikl)
-    modalImg.src = imgSrc;
-    
-    // 3. Změní display z 'none' na 'flex', aby se okno objevilo
-    modal.style.display = "flex";
+    document.getElementById("modalImg").src = imgSrc;
+    document.getElementById("imageModal").style.display = "flex";
 }
-
 function closeModal() {
-    // Schová okno zpět
     document.getElementById("imageModal").style.display = "none";
 }
 </script>
