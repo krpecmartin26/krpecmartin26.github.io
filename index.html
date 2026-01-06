@@ -13,6 +13,16 @@
         h2 { color: #004a99; border-bottom: 2px solid #004a99; padding-bottom: 10px; }
         .skill-tag { background: #ffffff; padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 5px; font-size: 0.9rem; }
         footer { text-align: center; padding: 2rem; color: #fab700; }
+        @media (max-width: 600px) {
+    #projects div[style*="display: flex"] {
+        flex-direction: column; /* Vyskládá projekty pod sebe */
+        align-items: center;
+    }
+    
+    #projects div[style*="max-width: 350px"] {
+        max-width: 100% !important; /* Roztáhne kartu na šířku mobilu */
+    }
+}
     </style>
 </head>
 <body>
