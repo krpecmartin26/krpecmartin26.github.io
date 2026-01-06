@@ -1,0 +1,21 @@
+body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f4f4; }
+header { background: #994099; color: white; padding: 2rem; text-align: center; }
+section { max-width: 800px; margin: 2rem auto; padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+h2 { color: #004a99; border-bottom: 2px solid #004a99; padding-bottom: 10px; }
+.skill-tag { background: #f0f0f0; padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 5px; font-size: 0.9rem; border: 1px solid #ddd; }
+
+/* Animace Reveal */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s ease-out; }
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+/* Logo MK Animace */
+.logo-path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: drawLogo 2.5s ease-in-out forwards; }
+@keyframes drawLogo { to { stroke-dashoffset: 0; } }
+
+#binary-loader { margin-top: 20px; font-family: 'Courier New', monospace; color: #994099; font-size: 16px; font-weight: bold; letter-spacing: 4px; }
+
+/* Responzivita */
+@media (max-width: 600px) {
+    #projects div[style*="display: flex"] { flex-direction: column; align-items: center; }
+    #projects div[style*="max-width: 350px"] { max-width: 100% !important; }
+}
