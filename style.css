@@ -127,3 +127,25 @@ li {
     color: #0077b5; /* Mírná změna barvy při najetí */
     transform: scale(1.2);
 }
+/* Karty projektů se jemně nadzvednou a zvýrazní */
+#projects div[style*="border: 1px solid"] {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#projects div[style*="border: 1px solid"]:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    border-color: #994099 !important;
+}
+
+/* Technologie (skill-tagy) změní barvu */
+.skill-tag {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-tag:hover {
+    background: #994099 !important;
+    color: white !important;
+    transform: scale(1.1);
+}
