@@ -34,7 +34,7 @@ function hidePreloader() {
 
 window.addEventListener('load', () => {
     // Čekáme 2.5 sekundy při startu, aby se logo stihlo vykreslit
-    setTimeout(hidePreloader, 2500);
+    setTimeout(hidePreloader, 2000);
 });
 
 /* =========================================
