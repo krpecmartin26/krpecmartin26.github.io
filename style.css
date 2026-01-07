@@ -56,16 +56,16 @@ html {
 /* 1. Písmeno M */
 .animate-logo path:nth-child(1) {
     /* M se kreslí 1.5 sekundy */
-    animation: drawLines 1.5s ease-in-out forwards;
+    animation: drawLines 1.0s ease-in-out forwards;
 }
 
 /* 2. Písmeno K */
 .animate-logo path:nth-child(2) {
     /* K se kreslí také 1.5 sekundy */
-    animation: drawLines 1.5s ease-in-out forwards;
+    animation: drawLines 1.0s ease-in-out forwards;
     
     /* Začne se kreslit, až když je M skoro hotové (po 1.2s) */
-    animation-delay: 1.2s; 
+    animation-delay: 0.8s; 
 }
 /* =========================================
    4. SEKCIE

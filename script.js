@@ -79,7 +79,7 @@ function openModal(imgSrc) {
             clearInterval(modalInterval);
             loader.style.display = "none";
             modalImg.style.display = "block";
-        }, 200); 
+        }, 400); 
     };
 
     modalImg.onerror = function() {
