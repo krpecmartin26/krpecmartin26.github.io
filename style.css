@@ -46,7 +46,22 @@ html {
     opacity: 1;
     transform: translateY(0);
 }
+/* Animace samotného kreslení čar */
+@keyframes drawLines {
+    from {
+        stroke-dashoffset: 300; /* Skryje celou čáru */
+    }
+    to {
+        stroke-dashoffset: 0;   /* Vykreslí ji celou */
+    }
+}
 
+/* Třída, kterou dostane logo pro efekt kreslení */
+.logo-draw {
+    stroke-dasharray: 300;     /* Délka přerušované čáry (dostatečná na celé logo) */
+    stroke-dashoffset: 300;    /* Posun, aby nebylo nic vidět */
+    animation: drawLines 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Plynulé vykreslení za 2.5s */
+}
 /* =========================================
    4. SEKCIE A NADPISY
    ========================================= */
