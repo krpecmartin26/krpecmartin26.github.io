@@ -36,24 +36,25 @@ html {
 /* =========================================
    3. ANIMACE LOGA (Kreslení)
    ========================================= */
+/* Definice klíčových snímků: Začneme s plným offsetem (neviditelné) a dojedeme na 0 (vykreslené) */
 @keyframes drawLines {
     from {
-        stroke-dashoffset: 400; /* Začne jako "neviditelné" */
+        stroke-dashoffset: 1000; /* Hodnota musí být vyšší než délka nejdelší čáry v logu */
         opacity: 0;
     }
     10% {
-        opacity: 1;
+        opacity: 1; /* Rychle zviditelníme cestu, aby se mohla kreslit */
     }
     to {
-        stroke-dashoffset: 0;   /* Dokreslí se */
+        stroke-dashoffset: 0;
         opacity: 1;
     }
 }
 
-/* Třída pro spuštění animace */
+/* Třída, kterou dynamicky přidáváme pro spuštění animace */
 .animate-logo path {
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
+    stroke-dasharray: 1000;     /* Délka přerušované čáry */
+    stroke-dashoffset: 1000;    /* Posun, aby byla čára "schovaná" za okrajem */
     animation: drawLines 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 

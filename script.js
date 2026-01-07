@@ -33,7 +33,7 @@ function hidePreloader() {
 }
 
 window.addEventListener('load', () => {
-    // Čekáme 2.5 sekundy, aby se logo stihlo vykreslit
+    // Čekáme 2.5 sekundy, aby se logo stihlo vykreslit na tmavém pozadí
     setTimeout(hidePreloader, 2500);
 });
 
@@ -59,7 +59,7 @@ function openModal(imgSrc) {
     // RESTART ANIMACE LOGA (Vypnout a zapnout třídu)
     if (modalSvg) {
         modalSvg.classList.remove("animate-logo");
-        void modalSvg.offsetWidth; // Magický řádek pro restart animace v prohlížeči
+        void modalSvg.offsetWidth; // Magický řádek pro restart animace
         modalSvg.classList.add("animate-logo");
     }
 
