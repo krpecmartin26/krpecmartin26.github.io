@@ -36,40 +36,28 @@ html {
 /* =========================================
    3. ANIMACE LOGA (Kreslení)
    ========================================= */
-/* Definice klíčových snímků: Začneme s plným offsetem (neviditelné) a dojedeme na 0 (vykreslené) */
+   
+/* 1. Definice animace: Z "neviditelného" (1000) do "viditelného" (0) */
 @keyframes drawLines {
     from {
-        stroke-dashoffset: 1000; /* Hodnota musí být vyšší než délka nejdelší čáry v logu */
-        opacity: 0;
-    }
-    10% {
-        opacity: 1; /* Rychle zviditelníme cestu, aby se mohla kreslit */
+        stroke-dashoffset: 1000; /* Čára je "odsunutá", takže není vidět */
     }
     to {
-        stroke-dashoffset: 0;
-        opacity: 1;
+        stroke-dashoffset: 0;    /* Čára je na svém místě = vykreslená */
     }
 }
 
-/* Třída, kterou dynamicky přidáváme pro spuštění animace */
+/* 2. Třída, která se přidá k SVG */
 .animate-logo path {
-    stroke-dasharray: 1000;     /* Délka přerušované čáry */
-    stroke-dashoffset: 1000;    /* Posun, aby byla čára "schovaná" za okrajem */
-    animation: drawLines 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    /* Nastavíme přerušovanou čáru delší než je samotné logo */
+    stroke-dasharray: 1000;
+    
+    /* Na začátku ji posuneme pryč, aby nebylo nic vidět */
+    stroke-dashoffset: 1000;
+    
+    /* Spustíme animaci: trvá 2 sekundy, plynulý dojezd */
+    animation: drawLines 2s ease-out forwards;
 }
-
-/* Odkrývání sekcí */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease-out;
-}
-
-.reveal.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* =========================================
    4. SEKCIE
    ========================================= */

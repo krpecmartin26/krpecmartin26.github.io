@@ -33,12 +33,12 @@ function hidePreloader() {
 }
 
 window.addEventListener('load', () => {
-    // Čekáme 2.5 sekundy, aby se logo stihlo vykreslit na tmavém pozadí
+    // Čekáme 2.5 sekundy při startu, aby se logo stihlo vykreslit
     setTimeout(hidePreloader, 2500);
 });
 
 /* =========================================
-   3. MODÁLNÍ OKNO
+   3. MODÁLNÍ OKNO (S opraveným zpožděním)
    ========================================= */
 let modalInterval; 
 
@@ -51,29 +51,35 @@ function openModal(imgSrc) {
     // Najdeme SVG v loaderu
     const modalSvg = loader.querySelector('svg');
 
+    // 1. Zobrazit okno a loader
     modal.style.display = "flex";
     loader.style.display = "block";
-    modalImg.style.display = "none";
-    modalImg.src = imgSrc;
-
-    // RESTART ANIMACE LOGA (Vypnout a zapnout třídu)
+    modalImg.style.display = "none"; // Obrázek zatím schovat
+    
+    // 2. RESTART ANIMACE LOGA (Klíčové pro postupné vykreslení)
     if (modalSvg) {
         modalSvg.classList.remove("animate-logo");
-        void modalSvg.offsetWidth; // Magický řádek pro restart animace
+        void modalSvg.offsetWidth; // Vynutí překreslení v prohlížeči (tzv. Reflow)
         modalSvg.classList.add("animate-logo");
     }
 
-    // Binární čísla v modálu
+    // 3. Spustit binární čísla
     if (binaryCont) {
         modalInterval = setInterval(() => {
             binaryCont.innerText = generateBinary(8);
         }, 80);
     }
 
+    // 4. Začít načítat obrázek
+    modalImg.src = imgSrc;
+
     modalImg.onload = function() {
-        clearInterval(modalInterval);
-        loader.style.display = "none";
-        modalImg.style.display = "block";
+        // Tady přidáváme zpoždění 0.2s (200ms), aby to neprobliklo moc rychle
+        setTimeout(() => {
+            clearInterval(modalInterval);
+            loader.style.display = "none";
+            modalImg.style.display = "block";
+        }, 200); 
     };
 
     modalImg.onerror = function() {
