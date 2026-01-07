@@ -34,29 +34,38 @@ html {
 }
 
 /* =========================================
-   3. ANIMACE LOGA - OPRAVENO
+   3. ANIMACE LOGA (Efekt kreslení perem)
    ========================================= */
 
 @keyframes drawLines {
-    from { stroke-dashoffset: 3000; }
-    to { stroke-dashoffset: 0; }
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
-/* Základní nastavení - skryje čáry před startem */
+/* Zde je hlavní změna: 
+   Snížili jsme 3000 na 400. To je délka, která 
+   přibližně odpovídá délce čar v písmenech M a K.
+*/
 .animate-logo path {
-    stroke-dasharray: 3000; 
-    stroke-dashoffset: 3000;
+    stroke-dasharray: 400; 
+    stroke-dashoffset: 400;
+    fill: none; /* Důležité: aby se nevyplňoval vnitřek */
 }
 
-/* 1. Část (M) - Startuje HNED */
+/* 1. Písmeno M */
 .animate-logo path:nth-child(1) {
-    animation: drawLines 2s ease-out forwards;
+    /* M se kreslí 1.5 sekundy */
+    animation: drawLines 1.5s ease-in-out forwards;
 }
 
-/* 2. Část (K) - Startuje o 0.2s POZDĚJI */
+/* 2. Písmeno K */
 .animate-logo path:nth-child(2) {
-    animation: drawLines 2s ease-out forwards;
-    animation-delay: 0.2s; /* Zde je to zpoždění */
+    /* K se kreslí také 1.5 sekundy */
+    animation: drawLines 1.5s ease-in-out forwards;
+    
+    /* Začne se kreslit, až když je M skoro hotové (po 1.2s) */
+    animation-delay: 1.2s; 
 }
 /* =========================================
    4. SEKCIE
