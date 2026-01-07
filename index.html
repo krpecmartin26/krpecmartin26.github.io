@@ -17,13 +17,29 @@
     <link rel="stylesheet" href="style.css">
     
 </head>
+<div id="imageModal" onclick="closeModal()" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column;">
+    
+    <div id="modalLoader" style="text-align: center;">
+        <div style="color: #3498db; width: 80px; height: 80px; margin: 0 auto;">
+            <svg style="width: 100%; height: 100%; animation: pulseLogo 1.5s infinite;">
+                <use xlink:href="#logo-mk"></use>
+            </svg>
+        </div>
+        <div id="modal-binary" style="margin-top: 15px; font-family: monospace; color: #3498db; font-size: 14px; letter-spacing: 2px;"></div>
+        <p style="font-family: Arial; font-size: 10px; color: #555; letter-spacing: 3px; margin-top: 5px;">LOADING DATA...</p>
+    </div>
+
+    <img id="modalImg" style="max-width: 90%; max-height: 90%; border: 2px solid #333; border-radius: 5px; display: none;">
+</div>
 <body>
 <svg style="display: none;">
   <symbol id="logo-mk" viewBox="0 0 100 100">
-    <path d="M10 80 V20 L30 50 L50 20 V80 M12 80 V20 M48 80 V20" 
-          fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M55 20 V80 M55 50 L85 20 M55 50 L85 80" 
-          fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20 80 V20 L50 50 L80 20 V80 M50 50 L80 80" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
   </symbol>
 </svg>
 <div class="logo-wrapper" style="color: #005f87;">

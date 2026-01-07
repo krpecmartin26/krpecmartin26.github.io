@@ -107,3 +107,42 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+let modalInterval; // Proměnná pro zastavení nul a jedniček
+
+function openModal(imgName) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    const loader = document.getElementById("modalLoader");
+    const binaryCont = document.getElementById("modal-binary");
+
+    modal.style.display = "flex";
+    loader.style.display = "block";
+    modalImg.style.display = "none";
+    modalImg.src = imgName;
+
+    // Spustit binární animaci (0 a 1)
+    modalInterval = setInterval(() => {
+        let bin = "";
+        for(let i=0; i<8; i++) bin += Math.round(Math.random());
+        binaryCont.innerText = bin;
+    }, 80);
+
+    // Jakmile je obrázek stažen
+    modalImg.onload = function() {
+        clearInterval(modalInterval); // Zastavit binární kód
+        loader.style.display = "none";
+        modalImg.style.display = "block";
+    };
+
+    // Pojistka pro chybu (např. špatný název souboru)
+    modalImg.onerror = function() {
+        clearInterval(modalInterval);
+        binaryCont.innerText = "ERROR: FILE NOT FOUND";
+        binaryCont.style.color = "red";
+    };
+}
+
+function closeModal() {
+    clearInterval(modalInterval);
+    document.getElementById("imageModal").style.display = "none";
+}
