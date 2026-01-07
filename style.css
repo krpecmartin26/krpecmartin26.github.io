@@ -262,34 +262,23 @@ ul {
 
 /* --- ZOOM MODAL STYLY --- */
 
-/* 1. KONTEJNER - Musí držet obsah uprostřed */
+/* Přidej nebo uprav toto ve svém CSS souboru */
 #modal-image-container {
-    display: flex;              /* Aktivuje Flexbox */
-    justify-content: center;    /* Zarovná vodorovně na střed */
-    align-items: center;        /* Zarovná svisle na střed */
-    width: 100%;
-    height: 100%;               /* Roztáhne se na celé okno */
-    overflow: hidden;           /* Schová vše, co by přeteklo při zoomu */
-    background-color: rgba(0,0,0,0.8); /* (Volitelné) Tmavé pozadí okolo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Zajistí, že startovní pozice je střed */
 }
 
-/* 2. OBRÁZEK - Musí respektovat hranice, ale zachovat poměr */
 #modalImg {
-    /* Maximální limity = nikdy nebude větší než okno */
+    /* Důležité: transformace se musí dít od středu */
+    transform-origin: center center; 
+    transition: transform 0.1s ease-out; /* Volitelné: pro hladší pohyb */
     max-width: 100%;
     max-height: 100%;
-
-    /* Auto = zachovej poměr stran (nedeformuj se) */
-    width: auto;
-    height: auto;
-
-    /* Důležité pro tvůj Zoom skript */
-    transform-origin: center center; /* Zoomuje se od středu */
-    transition: transform 0.1s ease-out; /* Hladký pohyb */
-    
-    /* Pojistka, aby se nechoval jako text */
-    display: block; 
 }
+
 /* Třída, kterou JS přidá, když držíš myš */
 #modal-image-container.grabbing {
     cursor: grabbing; 
