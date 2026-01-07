@@ -2,7 +2,7 @@
    1. GLOBÁLNÍ STYLY
    ========================================= */
 body {
-    background-color: #1a1a1a; /* Antracitové pozadí */
+    background-color: #1a1a1a;
     color: #e0e0e0;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,7 +14,7 @@ html {
 }
 
 /* =========================================
-   2. SCROLLBAR (Posuvník)
+   2. SCROLLBAR
    ========================================= */
 ::-webkit-scrollbar {
     width: 10px;
@@ -25,17 +25,39 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #005f87; /* Siemens tmavší modrá */
+    background: #005f87;
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #3498db; /* Siemens světlejší modrá */
+    background: #3498db;
 }
 
 /* =========================================
-   3. ANIMACE (Pouze pro odkrývání sekcí)
+   3. ANIMACE LOGA (Kreslení)
    ========================================= */
+@keyframes drawLines {
+    from {
+        stroke-dashoffset: 400; /* Začne jako "neviditelné" */
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    to {
+        stroke-dashoffset: 0;   /* Dokreslí se */
+        opacity: 1;
+    }
+}
+
+/* Třída pro spuštění animace */
+.animate-logo path {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: drawLines 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Odkrývání sekcí */
 .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -46,42 +68,9 @@ html {
     opacity: 1;
     transform: translateY(0);
 }
-/* Animace kreslení - logo se vykreslí zleva doprava */
-@keyframes drawLines {
-    0% {
-        stroke-dashoffset: 300; /* Neviditelné */
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        stroke-dashoffset: 0;   /* Vykreslené */
-        opacity: 1;
-    }
-}
-/* Třída, kterou budeme dynamicky přidávat */
-.animate-logo path {
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: drawLines 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
 
-/* Třída, kterou budeme dynamicky přidávat */
-.animate-logo path {
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: drawLines 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Třída, kterou dostane logo pro efekt kreslení */
-.logo-draw {
-    stroke-dasharray: 300;     /* Délka přerušované čáry (dostatečná na celé logo) */
-    stroke-dashoffset: 300;    /* Posun, aby nebylo nic vidět */
-    animation: drawLines 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Plynulé vykreslení za 2.5s */
-}
 /* =========================================
-   4. SEKCIE A NADPISY
+   4. SEKCIE
    ========================================= */
 section {
     max-width: 900px;
@@ -114,7 +103,7 @@ ul {
 }
 
 /* =========================================
-   5. BOČNÍ NAVIGACE (Side Nav)
+   5. BOČNÍ NAVIGACE
    ========================================= */
 .side-nav {
     position: fixed;
@@ -133,7 +122,7 @@ ul {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    writing-mode: vertical-rl; /* Text svisle */
+    writing-mode: vertical-rl;
     transition: all 0.3s ease;
     padding: 10px 0;
     border-right: 2px solid transparent;
@@ -254,7 +243,7 @@ ul {
 }
 
 /* =========================================
-   9. KONTAKT (Footer linky)
+   9. KONTAKT
    ========================================= */
 .tooltip-link {
     position: relative;
@@ -269,4 +258,3 @@ ul {
     color: #3498db;
     transform: scale(1.1);
 }
-

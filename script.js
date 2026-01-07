@@ -1,7 +1,6 @@
 /* =========================================
    1. POMOCNÉ FUNKCE
    ========================================= */
-// Generuje náhodné nuly a jedničky
 function generateBinary(length) {
     let text = "";
     for (let i = 0; i < length; i++) {
@@ -16,36 +15,30 @@ function generateBinary(length) {
 const preloaderBinary = document.getElementById('preloader-binary');
 let preloaderInterval;
 
-// Spustí animaci čísel hned při načítání scriptu
 if (preloaderBinary) {
     preloaderInterval = setInterval(() => {
-        preloaderBinary.innerText = generateBinary(12); // Délka řádku 12 znaků
+        preloaderBinary.innerText = generateBinary(12);
     }, 80);
 }
 
 function hidePreloader() {
     const loader = document.getElementById('preloader');
     if (loader) {
-        clearInterval(preloaderInterval); // Zastaví čísla
-        loader.style.opacity = '0';       // Zprůhlední
+        clearInterval(preloaderInterval);
+        loader.style.opacity = '0';
         setTimeout(() => {
-            loader.style.display = 'none'; // Odstraní z DOMu
+            loader.style.display = 'none';
         }, 500);
     }
 }
 
-// Čekáme na načtení všeho (obrázky, styly)
 window.addEventListener('load', () => {
-    // Minimálně 2 sekundy necháme logo svítit, ať si ho všimnou
-    setTimeout(hidePreloader, 2000);
+    // Čekáme 2.5 sekundy, aby se logo stihlo vykreslit
+    setTimeout(hidePreloader, 2500);
 });
 
-// Pojistka: Kdyby se něco seklo, po 5s zmizí násilím
-setTimeout(hidePreloader, 5000);
-
-
 /* =========================================
-   3. MODÁLNÍ OKNO (Certifikáty & Projekty)
+   3. MODÁLNÍ OKNO
    ========================================= */
 let modalInterval; 
 
@@ -55,7 +48,7 @@ function openModal(imgSrc) {
     const loader = document.getElementById("modalLoader");
     const binaryCont = document.getElementById("modal-binary");
     
-    // Najdeme SVG v modálním okně
+    // Najdeme SVG v loaderu
     const modalSvg = loader.querySelector('svg');
 
     modal.style.display = "flex";
@@ -63,24 +56,42 @@ function openModal(imgSrc) {
     modalImg.style.display = "none";
     modalImg.src = imgSrc;
 
-    // RESTART ANIMACE LOGA V MODÁLU
+    // RESTART ANIMACE LOGA (Vypnout a zapnout třídu)
     if (modalSvg) {
-        modalSvg.classList.remove("animate-logo"); // Reset
-        void modalSvg.offsetWidth; // Vynutí překreslení (trik prohlížeče)
-        modalSvg.classList.add("animate-logo");    // Spustí animaci znovu
+        modalSvg.classList.remove("animate-logo");
+        void modalSvg.offsetWidth; // Magický řádek pro restart animace v prohlížeči
+        modalSvg.classList.add("animate-logo");
     }
 
-    // ... zbytek tvého kódu (interval pro čísla, onload atd.) ...
+    // Binární čísla v modálu
+    if (binaryCont) {
+        modalInterval = setInterval(() => {
+            binaryCont.innerText = generateBinary(8);
+        }, 80);
+    }
+
+    modalImg.onload = function() {
+        clearInterval(modalInterval);
+        loader.style.display = "none";
+        modalImg.style.display = "block";
+    };
+
+    modalImg.onerror = function() {
+        clearInterval(modalInterval);
+        if (binaryCont) {
+            binaryCont.innerText = "ERROR: FILE NOT FOUND";
+            binaryCont.style.color = "#ff4444";
+        }
+    };
 }
 
 function closeModal() {
-    clearInterval(modalInterval); // Pro jistotu zastavit interval
+    clearInterval(modalInterval);
     document.getElementById("imageModal").style.display = "none";
 }
 
-
 /* =========================================
-   4. SCROLL SPY (Zvýraznění menu) & NAVIGACE
+   4. SCROLL SPY & PLYNULÝ SCROLL
    ========================================= */
 window.addEventListener('scroll', () => {
     let current = '';
@@ -89,21 +100,19 @@ window.addEventListener('scroll', () => {
 
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        // Offset 150px - přepne barvu v menu trochu dřív, než tam dojedeme úplně
         if (pageYOffset >= (sectionTop - 150)) {
             current = section.getAttribute('id');
         }
     });
 
     navItems.forEach(item => {
-        item.classList.remove('active'); // Zruší modrou u všech
+        item.classList.remove('active');
         if (item.getAttribute('href').includes(current)) {
-            item.classList.add('active'); // Přidá modrou aktuálnímu
+            item.classList.add('active');
         }
     });
 });
 
-// Plynulý scroll po kliknutí na odkaz
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -111,17 +120,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-            // Smooth scroll s vlastní rychlostí
             const targetPosition = targetElement.offsetTop;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 1500; // Rychlost scrollu (ms)
+            const duration = 1500;
             let start = null;
 
             function step(timestamp) {
                 if (!start) start = timestamp;
                 const progress = timestamp - start;
-                // Easing funkce (rozjezd-dojezd)
                 const run = ease(progress, startPosition, distance, duration);
                 window.scrollTo(0, run);
                 if (progress < duration) window.requestAnimationFrame(step);
@@ -139,9 +146,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-
 /* =========================================
-   5. SCROLL REVEAL (Efekt při scrollování)
+   5. SCROLL REVEAL
    ========================================= */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {

@@ -20,19 +20,28 @@
 
 <svg style="display: none;">
   <symbol id="logo-mk" viewBox="0 0 100 100">
-    <path d="M20 80 V20 L50 50 L80 20" 
-          fill="none" stroke="#3498db" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M80 20 V80 M50 50 L80 80" 
-          fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20 80 V20 L50 50 L80 20 V80" 
+          fill="none" 
+          stroke="#3498db" 
+          stroke-width="5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+          
+    <path d="M80 20 V80 M80 50 L100 20 M80 50 L100 80" 
+          fill="none" 
+          stroke="#1a1a1a" 
+          stroke-width="5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
   </symbol>
 </svg>
 
-<div id="preloader" ...>
+<div id="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 20000; transition: opacity 0.5s;">
     <div style="text-align: center;">
         <svg width="120" height="120" class="animate-logo">
             <use xlink:href="#logo-mk"></use>
         </svg>
-        <div id="preloader-binary" ...></div>
+        <div id="preloader-binary" style="margin-top: 20px; font-family: monospace; color: #3498db; letter-spacing: 2px; font-weight: bold;"></div>
     </div>
 </div>
 
@@ -138,7 +147,9 @@
     <section id="certifications" class="reveal" style="padding: 60px 20px;">
         <h2 style="text-align: center; color: #3498db; text-transform: uppercase; letter-spacing: 2px;">Certifications</h2>
         <div style="width: 100px; height: 2px; background: #3498db; margin: 10px auto 40px auto;"></div>
+        
         <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1100px; margin: 0 auto;">
+            
             <div class="cert-card" onclick="openModal('TIA SERV 1,2.png')">
                 <div class="cert-content">
                     <i class="fas fa-file-contract"></i>
@@ -146,6 +157,7 @@
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
+
             <div class="cert-card" onclick="openModal('TIA SERV 3.png')">
                 <div class="cert-content">
                     <i class="fas fa-certificate"></i>
@@ -153,6 +165,7 @@
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
+
             <div class="cert-card" onclick="openModal('TIA Safety.png')">
                 <div class="cert-content">
                     <i class="fas fa-shield-alt"></i>
@@ -160,6 +173,7 @@
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
+
             <div class="cert-card" onclick="openModal('Tia_SCL.png')">
                 <div class="cert-content">
                     <i class="fas fa-code"></i>
@@ -167,6 +181,7 @@
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
+
             <div class="cert-card" onclick="openModal('Foxon profinet.png')">
                 <div class="cert-content">
                     <i class="fas fa-network-wired"></i>
@@ -174,27 +189,30 @@
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
-            <div class="cert-card" onclick="openModal('ABB_IRC5 Diagnostic and troubleshooting.png')">
+
+            <div class="cert-card" onclick="openModal('abb_diag.png')">
                 <div class="cert-content">
                     <i class="fas fa-robot"></i>
                     <div class="cert-info"><h3>ABB IRC5</h3><p>Diagnostic and troubleshooting</p></div>
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
-            <div class="cert-card" onclick="openModal('ABB_IRC5 operation and basic programming.png')">
+
+            <div class="cert-card" onclick="openModal('abb_basic.png')">
                 <div class="cert-content">
                     <i class="fas fa-terminal"></i>
                     <div class="cert-info"><h3>ABB IRC5</h3><p>Basic programming</p></div>
                 </div>
                 <div class="cert-footer">View Document</div>
             </div>
+
         </div>
     </section>
 </main>
 
 <div id="imageModal" onclick="closeModal()" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column;">
     <div id="modalLoader" style="text-align: center;">
-    <svg width="80" height="80" class="animate-logo"> <use xlink:href="#logo-mk"></use>
+        <svg width="80" height="80">
             <use xlink:href="#logo-mk"></use>
         </svg>
         <div id="modal-binary" style="margin-top: 15px; font-family: monospace; color: #3498db; font-size: 14px; letter-spacing: 2px;"></div>
