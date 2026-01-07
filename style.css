@@ -260,18 +260,40 @@ ul {
    10. MODÁLNÍ OKNO - HOLD TO ZOOM
    ========================================= */
 
-#modalImg {
-    cursor: zoom-in; /* Ikona lupy */
-    /* Zrychlili jsme čas z 0.3s na 0.15s pro okamžitou reakci */
-    transition: transform 0.15s ease-out; 
-    transform-origin: center center;
-    /* Zabrání označování obrázku jako textu při držení */
-    user-select: none; 
-    -webkit-user-select: none;
+/* --- ZOOM MODAL STYLY --- */
+
+/* Kontejner, který ohraničuje viditelnou oblast obrázku */
+#modal-image-container {
+    width: 90%;
+    height: 80%;
+    max-width: 1400px; /* Maximální šířka okna */
+    max-height: 900px;
+    position: relative;
+    overflow: hidden; /* To, co je "mimo" rámeček, se schová */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-in; /* Kurzor lupy */
 }
 
-#modalImg.zoomed {
-    transform: scale(2); 
-    cursor: grabbing; /* Ikona "držící ruky" (volitelné) */
-    z-index: 10001;
+/* Samotný obrázek */
+#modalImg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transform-origin: 0 0; /* Důležité: počítá pozici od rohu */
+    transition: transform 0.1s ease-out; /* Plynulý pohyb */
+    user-select: none; /* Zákaz označování textu */
+    pointer-events: none; /* Kliknutí propadnou na kontejner */
+    will-change: transform; /* Optimalizace výkonu */
+}
+
+/* Třída, kterou JS přidá, když držíš myš */
+#modal-image-container.grabbing {
+    cursor: grabbing; 
+}
+
+/* Skrytí loaderu, když není potřeba (řeší JS, ale pro jistotu) */
+#modalLoader {
+    pointer-events: none;
 }

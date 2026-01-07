@@ -33,56 +33,70 @@ function hidePreloader() {
 }
 
 window.addEventListener('load', () => {
-    // Čekáme 2.5 sekundy při startu, aby se logo stihlo vykreslit
     setTimeout(hidePreloader, 1800);
 });
 
 /* =========================================
-   3. MODÁLNÍ OKNO (S opraveným zpožděním)
+   3. MODÁLNÍ OKNO + NOVÝ ZOOM (Logic)
    ========================================= */
 let modalInterval; 
 
+// Proměnné pro Zoom a Pan
+const zoomContainer = document.getElementById("modal-image-container");
+const zoomImg = document.getElementById("modalImg");
+const modalWindow = document.getElementById("imageModal");
+
+let scale = 1;
+let pannedX = 0;
+let pannedY = 0;
+let isDragging = false;
+let startX, startY;
+const ZOOM_LEVEL = 2.5; // Síla přiblížení
+
+// --- OTEVŘENÍ OKNA ---
 function openModal(imgSrc) {
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImg");
     const loader = document.getElementById("modalLoader");
     const binaryCont = document.getElementById("modal-binary");
-    
-    // Najdeme SVG v loaderu
     const modalSvg = loader.querySelector('svg');
 
-    // 1. Zobrazit okno a loader
-    modal.style.display = "flex";
+    // 1. Resetovat Zoom při každém otevření
+    scale = 1;
+    pannedX = 0;
+    pannedY = 0;
+    updateTransform();
+    if(zoomContainer) zoomContainer.style.cursor = "zoom-in";
+
+    // 2. Zobrazit okno a loader
+    modalWindow.style.display = "flex";
     loader.style.display = "block";
-    modalImg.style.display = "none"; // Obrázek zatím schovat
+    zoomImg.style.display = "none";
     
-    // 2. RESTART ANIMACE LOGA (Klíčové pro postupné vykreslení)
+    // Restart animace loga
     if (modalSvg) {
         modalSvg.classList.remove("animate-logo");
-        void modalSvg.offsetWidth; // Vynutí překreslení v prohlížeči (tzv. Reflow)
+        void modalSvg.offsetWidth; 
         modalSvg.classList.add("animate-logo");
     }
 
-    // 3. Spustit binární čísla
+    // Binární čísla (efekt)
     if (binaryCont) {
         modalInterval = setInterval(() => {
             binaryCont.innerText = generateBinary(8);
         }, 80);
     }
 
-    // 4. Začít načítat obrázek
-    modalImg.src = imgSrc;
+    // Načtení obrázku
+    zoomImg.src = imgSrc;
 
-    modalImg.onload = function() {
-        // Tady přidáváme zpoždění 0.2s (200ms), aby to neprobliklo moc rychle
+    zoomImg.onload = function() {
         setTimeout(() => {
             clearInterval(modalInterval);
             loader.style.display = "none";
-            modalImg.style.display = "block";
+            zoomImg.style.display = "block";
         }, 400); 
     };
 
-    modalImg.onerror = function() {
+    zoomImg.onerror = function() {
         clearInterval(modalInterval);
         if (binaryCont) {
             binaryCont.innerText = "ERROR: FILE NOT FOUND";
@@ -91,55 +105,93 @@ function openModal(imgSrc) {
     };
 }
 
+// --- ZAVŘENÍ OKNA ---
 function closeModal() {
     clearInterval(modalInterval);
-    document.getElementById("imageModal").style.display = "none";
-    
-    // TOTO JE NOVÉ: Ujistíme se, že se obrázek od-zoomuje
-    document.getElementById("modalImg").classList.remove('zoomed');
+    modalWindow.style.display = "none";
 }
-/* =========================================
-   LOGIKA PRO MODÁLNÍ OKNO (HOLD TO ZOOM)
-   ========================================= */
-const modal = document.getElementById("imageModal");
-const modalImg = document.getElementById("modalImg");
 
-// 1. Zavírání kliknutím na černé pozadí
-modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
+// --- JÁDRO ZOOMU (Matematika) ---
+function updateTransform() {
+    zoomImg.style.transform = `translate(${pannedX}px, ${pannedY}px) scale(${scale})`;
+}
+
+function checkBoundaries() {
+    const rect = zoomContainer.getBoundingClientRect();
+    // Jak velký je obrázek po zvětšení
+    const contentWidth = rect.width * scale;
+    const contentHeight = rect.height * scale;
+
+    // Logika: nenechat uživatele odtáhnout obrázek tak, aby bylo vidět černé pozadí
+    if (pannedX > 0) pannedX = 0;
+    if (pannedX < rect.width - contentWidth) pannedX = rect.width - contentWidth;
+    
+    if (pannedY > 0) pannedY = 0;
+    if (pannedY < rect.height - contentHeight) pannedY = rect.height - contentHeight;
+}
+
+// --- EVENT LISTENERS (Ovládání myší) ---
+
+// 1. Zavření kliknutím mimo
+modalWindow.addEventListener('click', function(e) {
+    if (e.target === modalWindow) {
         closeModal();
     }
 });
 
-// 2. Zoom držením myši (mousedown/mouseup)
-modalImg.addEventListener('mousedown', function(e) {
-    e.stopPropagation(); // Aby se nezavřelo okno
-    e.preventDefault();  // Aby se obrázek nezačal přetahovat
-    this.classList.add('zoomed');
-});
+if (zoomContainer) {
+    // 2. Kliknutí (Zoom nebo Start tažení)
+    zoomContainer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
 
-modalImg.addEventListener('mouseup', function(e) {
-    e.stopPropagation();
-    this.classList.remove('zoomed');
-});
+        if (scale > 1) {
+            // Jsme přiblížení -> začínáme táhnout
+            isDragging = true;
+            startX = e.clientX - pannedX;
+            startY = e.clientY - pannedY;
+            zoomContainer.classList.add('grabbing');
+        } else {
+            // Nejsme přiblížení -> ZOOM na bod
+            const rect = zoomContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-// 3. Pojistka: Když ujedu myší pryč z obrázku, zrušit zoom
-modalImg.addEventListener('mouseleave', function(e) {
-    this.classList.remove('zoomed');
-});
+            scale = ZOOM_LEVEL;
+            pannedX = x - (x * scale);
+            pannedY = y - (y * scale);
+            
+            zoomContainer.style.cursor = "grab";
+            updateTransform();
+        }
+    });
 
-// 4. Podpora pro dotykové displeje (mobil)
-modalImg.addEventListener('touchstart', function(e) {
-    e.stopPropagation();
-    e.preventDefault(); 
-    this.classList.add('zoomed');
-});
+    // 3. Pohyb myší (Tažení)
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
 
-modalImg.addEventListener('touchend', function(e) {
-    e.stopPropagation();
-    this.classList.remove('zoomed');
-});
+        pannedX = e.clientX - startX;
+        pannedY = e.clientY - startY;
 
+        checkBoundaries();
+        updateTransform();
+    });
+
+    // 4. Puštění myši
+    window.addEventListener('mouseup', () => {
+        isDragging = false;
+        zoomContainer.classList.remove('grabbing');
+    });
+
+    // 5. Dvojklik (Reset)
+    zoomContainer.addEventListener('dblclick', () => {
+        scale = 1;
+        pannedX = 0;
+        pannedY = 0;
+        zoomContainer.style.cursor = "zoom-in";
+        updateTransform();
+    });
+}
 
 /* =========================================
    4. SCROLL SPY & PLYNULÝ SCROLL
