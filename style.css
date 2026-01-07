@@ -200,9 +200,11 @@ li {
 .cert-content {
     padding: 20px;
     display: flex;
-    gap: 15px;
-    align-items: flex-start; /* Zarovná ikonu k prvnímu řádku textu */
-    flex-grow: 1;            /* Přinutí obsah vyplnit veškeré volné místo */
+    flex-direction: column; /* Ikona bude nad textem */
+    align-items: center;    /* Vše na střed horizontálně */
+    text-align: center;     /* Text na střed */
+    gap: 10px;
+    flex-grow: 1;
 }
 
 .cert-content i {
@@ -216,11 +218,10 @@ li {
     color: #fff;
 }
 
-.cert-info p {
-    margin: 0;
-    font-size: 13px;
-    color: #888;
-    line-height: 1.4;
+.cert-info h3 {
+    margin: 10px 0 5px 0;
+    font-size: 16px;
+    color: #fff;
 }
 
 .cert-footer {
@@ -233,4 +234,38 @@ li {
     text-transform: uppercase;
     border-top: 1px solid #333;
     margin-top: auto;        /* Pojistka, aby patička byla vždy dole */
+}
+.side-nav {
+    position: fixed;
+    right: 40px; /* Menu bude vpravo */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+}
+
+/* Na mobilu menu schováme nebo ho vrátíme nahoru */
+@media (max-width: 768px) {
+    .side-nav {
+        display: none; 
+    }
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    writing-mode: vertical-rl; /* Text bude svisle */
+    transition: all 0.3s ease;
+    padding: 10px 0;
+    border-right: 2px solid transparent;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: #3498db;
+    border-right: 2px solid #3498db;
 }
