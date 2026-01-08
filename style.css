@@ -243,8 +243,11 @@ ul {
 /* =========================================
    9. KONTAKT
    ========================================= */
+/* =========================================
+   9. KONTAKT (Tooltips)
+   ========================================= */
 .tooltip-link {
-    position: relative;
+    position: relative; /* Nutné pro pozicování bubliny */
     color: #005f87;
     font-size: 35px;
     text-decoration: none;
@@ -255,6 +258,59 @@ ul {
 .tooltip-link:hover {
     color: #3498db;
     transform: scale(1.1);
+}
+
+/* --- TOTO TI CHYBĚLO: Vzhled bubliny --- */
+.tooltip-link::after {
+    content: attr(data-tooltip); /* Vezme text z HTML atributu */
+    position: absolute;
+    bottom: 120%; /* Umístění nad ikonou */
+    left: 50%;
+    transform: translateX(-50%); /* Vycentrování */
+    
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px; /* Zvětšeno pro čitelnost */
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: normal;
+    white-space: nowrap;
+    pointer-events: none;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Malá šipka pod bublinou (volitelné, pro hezčí efekt) */
+.tooltip-link::before {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Zobrazení při najetí myší */
+.tooltip-link:hover::after,
+.tooltip-link:hover::before {
+    opacity: 1;
+    visibility: visible;
+    bottom: 135%; /* Jemný posun nahoru */
+}
+
+.tooltip-link:hover::before {
+    bottom: 125%; /* Šipka se posune o trochu méně */
 }
 /* =========================================
    10. MODÁLNÍ OKNO - HOLD TO ZOOM
