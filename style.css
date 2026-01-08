@@ -1,16 +1,49 @@
 /* =========================================
+   0. DEFINICE BAREV (THEMES)
+   ========================================= */
+:root {
+    /* --- VÝCHOZÍ (TMAVÝ) REŽIM --- */
+    --bg-main: #1a1a1a;           /* Hlavní pozadí stránky */
+    --bg-card: #222222;           /* Pozadí karet a sekcí */
+    --bg-nav: #111111;            /* Pozadí patičky a prvků */
+    
+    --text-main: #e0e0e0;         /* Hlavní text */
+    --text-muted: #aaa;           /* Šedý text */
+    
+    --accent: #005f87;            /* Tmavší modrá */
+    --accent-hover: #3498db;      /* Svítivá modrá */
+    
+    --border: #333;               /* Barva rámečků */
+    --shadow: rgba(0,0,0,0.5);    /* Stín */
+}
+
+/* --- SVĚTLÝ REŽIM (PŘIDÁVÁ SE TŘÍDOU) --- */
+body.light-mode {
+    --bg-main: #f0f2f5;           /* Světle šedá (jako papír) */
+    --bg-card: #ffffff;           /* Bílé karty */
+    --bg-nav: #e1e4e8;            /* Světlejší patička */
+    
+    --text-main: #1a1a1a;         /* Tmavý text (černá) */
+    --text-muted: #555;           /* Tmavší šedá */
+    
+    --accent: #005f87;            /* Modrá zůstává (je dobře čitelná) */
+    --accent-hover: #0077b5;      /* Trochu tmavší modrá pro hover na bílé */
+    
+    --border: #ccc;               /* Světlé rámečky */
+    --shadow: rgba(0,0,0,0.1);    /* Jemnější stín */
+}
+
+/* =========================================
    1. GLOBÁLNÍ STYLY
    ========================================= */
 body {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
+    /* ZMĚNA: Použijeme proměnnou místo pevné barvy */
+    background-color: var(--bg-main); 
+    color: var(--text-main);
+    
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 /* =========================================
@@ -71,33 +104,21 @@ html {
    4. SEKCIE
    ========================================= */
 section {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2.5rem;
-    background: #222222;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    text-align: center;
+    /* ... */
+    background: var(--bg-card); /* Místo #222222 */
+    box-shadow: 0 10px 30px var(--shadow); /* Místo rgba(...) */
+    /* ... */
 }
 
 h2 {
-    color: #005f87; 
-    border-bottom: 2px solid #005f87;
-    padding-bottom: 10px;
-    display: inline-block;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    color: var(--accent); /* Místo #005f87 */
+    border-bottom: 2px solid var(--accent);
+    /* ... */
 }
 
 h3 {
-    color: #ffffff;
-    margin-top: 0;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
+    color: var(--text-main); /* Místo #ffffff */
+    /* ... */
 }
 
 /* =========================================
@@ -179,73 +200,21 @@ ul {
    8. CERTIFIKÁTY
    ========================================= */
 .cert-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #333;
-    border-radius: 8px;
-    width: 320px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.cert-card:hover {
-    border-color: #3498db;
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.cert-content {
-    padding: 25px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 15px;
-    flex-grow: 1;
-}
-
-.cert-content i {
-    font-size: 28px;
-    color: #3498db;
-    margin-bottom: 5px;
-}
-
-.cert-info h3 {
-    margin: 0 0 8px 0;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 600;
-}
-
-.cert-info p {
-    margin: 0;
-    font-size: 13px;
-    color: #aaa;
-    line-height: 1.5;
+    /* ... */
+    border: 1px solid var(--border); /* Místo #333 */
+    /* ... */
 }
 
 .cert-footer {
-    background: #111;
-    padding: 12px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: bold;
-    color: #3498db;
-    text-transform: uppercase;
-    border-top: 1px solid #333;
-    margin-top: auto;
+    background: var(--bg-nav); /* Místo #111 */
+    /* ... */
+    border-top: 1px solid var(--border); /* Místo #333 */
 }
 
 /* =========================================
    9. KONTAKT
    ========================================= */
-/* =========================================
-   9. KONTAKT (Tooltips)
-   ========================================= */
+
 .tooltip-link {
     position: relative; /* Nutné pro pozicování bubliny */
     color: #005f87;
@@ -259,7 +228,12 @@ ul {
     color: #3498db;
     transform: scale(1.1);
 }
-
+footer#contact {
+    background-color: var(--bg-nav);
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-muted);
+}
 /* --- TOTO TI CHYBĚLO: Vzhled bubliny --- */
 .tooltip-link::after {
     content: attr(data-tooltip); /* Vezme text z HTML atributu */

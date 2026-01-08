@@ -15,6 +15,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <button id="theme-toggle" style="
+    position: fixed; 
+    top: 20px; 
+    right: 30px; 
+    z-index: 1001; 
+    background: var(--bg-card); 
+    border: 1px solid var(--accent); 
+    color: var(--accent); 
+    padding: 10px 15px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <i class="fas fa-sun"></i>
+</button>
 </head>
 
 <body>
@@ -315,7 +335,7 @@
 
             <div class="cert-card" onclick="openModal('abb_basic.png')">
                 <div class="cert-content">
-                    <i class="fas fa-terminal"></i>
+                    <i class="fas fa-robot"></i>
                     <div class="cert-info"><h3>ABB IRC5</h3><p>Basic programming</p></div>
                 </div>
                 <div class="cert-footer">View Document</div>
@@ -363,7 +383,7 @@
         </a>
 
     </div>
-    <p style="margin-top: 40px; font-size: 13px; color: #555;">&copy; 2026 Martin Krpec | Built with Github</p>
+    
 </footer>
 
 <script src="script.js"></script>

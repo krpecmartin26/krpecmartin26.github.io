@@ -271,3 +271,44 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+/* =========================================
+   6. PŘEPÍNAČ DEN / NOC (S detekcí času)
+   ========================================= */
+const toggleBtn = document.getElementById('theme-toggle');
+const toggleIcon = toggleBtn.querySelector('i');
+const body = document.body;
+
+// Zjistíme aktuální hodinu u uživatele (0-23)
+const currentHour = new Date().getHours();
+// Definujeme, co je "den" (např. od 7:00 do 19:00)
+const isDayTime = currentHour >= 7 && currentHour < 19;
+
+// Načteme uložené nastavení z minula
+const savedTheme = localStorage.getItem('theme');
+
+// --- ROZHODOVACÍ LOGIKA ---
+// 1. Pokud je uloženo 'light' -> zapni světlý
+// 2. NEBO pokud není uloženo nic A ZÁROVEŇ je den -> zapni světlý
+if (savedTheme === 'light' || (!savedTheme && isDayTime)) {
+    body.classList.add('light-mode');
+    toggleIcon.classList.remove('fa-sun');
+    toggleIcon.classList.add('fa-moon');
+}
+
+// --- FUNKCE PŘEPÍNÁNÍ TLAČÍTKEM ---
+toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+
+    if (body.classList.contains('light-mode')) {
+        // Přepli jsme na světlý
+        toggleIcon.classList.remove('fa-sun');
+        toggleIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light'); // Uložíme volbu navždy
+    } else {
+        // Přepli jsme na tmavý
+        toggleIcon.classList.remove('fa-moon');
+        toggleIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark'); // Uložíme volbu navždy
+    }
+});
