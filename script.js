@@ -312,3 +312,19 @@ toggleBtn.addEventListener('click', () => {
         localStorage.setItem('theme', 'dark'); // Uložíme volbu navždy
     }
 });
+/* =========================================
+   7. FLASHLIGHT EFEKT
+   ========================================= */
+const flashlight = document.getElementById('flashlight');
+
+if (flashlight) {
+    document.addEventListener('mousemove', (e) => {
+        // Získáme souřadnice myši
+        const x = e.clientX;
+        const y = e.clientY;
+
+        // Pošleme je do CSS jako proměnné
+        flashlight.style.setProperty('--x', x + 'px');
+        flashlight.style.setProperty('--y', y + 'px');
+    });
+}

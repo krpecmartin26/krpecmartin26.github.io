@@ -496,3 +496,42 @@ strong {
 /* FOOTER */
 .social-links { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
 .copyright { margin-top: 40px; font-size: 13px; color: var(--text-muted); }
+/* =========================================
+   11. FLASHLIGHT (CURSOR GLOW)
+   ========================================= */
+#flashlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* DŮLEŽITÉ: Umožní klikat "skrz" světlo */
+    z-index: 9999; /* Musí být nad vším */
+    
+    /* Výchozí stav (Tmavý režim): Modrá záře */
+    /* Používáme proměnné --x a --y, které nám pošle Javascript */
+    background: radial-gradient(
+        600px circle at var(--x, 50%) var(--y, 50%), 
+        rgba(0, 95, 135, 0.15),  /* Střed: Jemná modrá (tvůj accent) */
+        transparent 40%          /* Okraj: Průhledná */
+    );
+    
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+/* Úprava pro Světlý režim */
+body.light-mode #flashlight {
+    /* Ve světlém režimu by modrá záře vypadala divně. 
+       Můžeme ji buď vypnout (opacity: 0) nebo změnit na jemný stín. */
+       
+    /* Varianta A: Vypnout */
+    /* opacity: 0; */
+
+    /* Varianta B: Jemná šedá záře (decentní) */
+    background: radial-gradient(
+        600px circle at var(--x, 50%) var(--y, 50%), 
+        rgba(0, 0, 0, 0.05), 
+        transparent 40%
+    );
+}
