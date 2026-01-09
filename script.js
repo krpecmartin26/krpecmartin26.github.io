@@ -37,7 +37,7 @@ window.addEventListener('load', () => {
 });
 
 /* =========================================
-   3. MODÁLNÍ OKNO + ZOOM (ULTIMÁTNÍ VERZE)
+   3. MODÁLNÍ OKNO + ZOOM (FINAL - FAST PAN & CLICK CLOSE)
    ========================================= */
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
@@ -49,42 +49,44 @@ const binaryCont = document.getElementById("modal-binary");
 let scale = 1;
 let pannedX = 0;
 let pannedY = 0;
+
+// Logika pro tažení (Drag)
 let isDragging = false;
-let startX = 0;
-let startY = 0;
+let startMouseX = 0;
+let startMouseY = 0;
+let startPannedX = 0;
+let startPannedY = 0;
+let hasMoved = false; // Pojistka: Rozliší kliknutí od tažení
+
+const PAN_SPEED = 1.5; // ZRYCHLENÍ: Obrázek se posouvá 1.5x rychleji než myš
 let modalInterval; 
 
-// --- 1. OTEVŘENÍ OKNA (S loaderem) ---
+// --- 1. OTEVŘENÍ OKNA ---
 function openModal(src) {
-    // Reset stavu
+    // Reset
     scale = 1;
     pannedX = 0;
     pannedY = 0;
     updateTransform();
     
     modal.style.display = "flex";
-    modalImg.style.display = "none"; // Schováme obrázek
-    loader.style.display = "block";  // Ukážeme loader
+    modalImg.style.display = "none";
+    loader.style.display = "block";
     
-    // Binární efekt (tvůj kód)
     if (binaryCont) {
         clearInterval(modalInterval);
         modalInterval = setInterval(() => {
-            // Jednoduchý generátor nul a jedniček
             binaryCont.innerText = Math.random().toString(2).substr(2, 8);
         }, 80);
     }
 
-    // Načtení obrázku
     modalImg.src = src;
     
     modalImg.onload = () => {
-        // Malé zpoždění pro efekt
         setTimeout(() => {
             clearInterval(modalInterval);
             loader.style.display = "none";
             modalImg.style.display = "block";
-            // Nastavíme kurzor
             container.style.cursor = "grab";
         }, 400);
     };
@@ -104,31 +106,27 @@ function closeModal() {
     clearInterval(modalInterval);
 }
 
-// --- 3. JÁDRO: Aplikace pohybu ---
+// --- 3. APLIKACE POHYBU ---
 function updateTransform() {
     modalImg.style.transform = `translate(${pannedX}px, ${pannedY}px) scale(${scale})`;
 }
 
-// --- 4. VYLEPŠENÁ HRANICE (Aby obrázek neutekl) ---
+// --- 4. HLÍDÁNÍ HRANIC ---
 function checkBoundaries() {
-    // Získáme rozměry kontejneru (okna)
     const rect = container.getBoundingClientRect();
-    
-    // Získáme rozměry OBRÁZKU po nazoomování
-    // Používáme naturalWidth/Height, aby to bylo přesné
     const imgW = modalImg.offsetWidth * scale;
     const imgH = modalImg.offsetHeight * scale;
 
-    // Limit pro osu X
+    // Osa X
     if (imgW > rect.width) {
         const maxX = (imgW - rect.width) / 2;
         if (pannedX > maxX) pannedX = maxX;
         if (pannedX < -maxX) pannedX = -maxX;
     } else {
-        pannedX = 0; // Pokud je obrázek menší než okno, vycentruj ho
+        pannedX = 0;
     }
 
-    // Limit pro osu Y
+    // Osa Y
     if (imgH > rect.height) {
         const maxY = (imgH - rect.height) / 2;
         if (pannedY > maxY) pannedY = maxY;
@@ -138,37 +136,33 @@ function checkBoundaries() {
     }
 }
 
-// --- 5. OVLÁDÁNÍ MYŠÍ (WHEEL + DRAG) ---
+// --- 5. OVLÁDÁNÍ MYŠÍ ---
 
 if (container) {
-    // A) ZOOM KOLEČKEM (Nejlepší pro PC)
+    // A) ZOOM KOLEČKEM
     container.addEventListener('wheel', (e) => {
         e.preventDefault();
-        
         const delta = e.deltaY * -0.001;
-        const newScale = Math.min(Math.max(1, scale + delta), 4); // Min 1x, Max 4x
-
+        const newScale = Math.min(Math.max(1, scale + delta), 4);
         scale = newScale;
         
-        // Pokud jsme odzoomovali na 100%, resetujeme pozici
         if (scale === 1) {
-            pannedX = 0;
-            pannedY = 0;
-            container.style.cursor = "grab";
-        } else {
-            container.style.cursor = "grab";
+            pannedX = 0; pannedY = 0;
         }
-        
-        checkBoundaries(); // Zkontrolujeme, jestli zoomem neutekl okraj
+        checkBoundaries();
         updateTransform();
     });
 
     // B) ZAČÁTEK TAŽENÍ (Mousedown)
     container.addEventListener('mousedown', (e) => {
-        if (scale > 1) { // Táhnout jde jen když je nazoomováno
+        hasMoved = false; // Reset pojistky
+        if (scale > 1) {
             isDragging = true;
-            startX = e.clientX - pannedX;
-            startY = e.clientY - pannedY;
+            // Uložíme startovní pozici myši i obrázku
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+            startPannedX = pannedX;
+            startPannedY = pannedY;
             container.classList.add('grabbing');
             e.preventDefault();
         }
@@ -178,11 +172,16 @@ if (container) {
     window.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         e.preventDefault();
+        hasMoved = true; // Uživatel hýbe myší -> je to tažení, ne klik
 
-        pannedX = e.clientX - startX;
-        pannedY = e.clientY - startY;
+        // Vypočítáme rozdíl a vynásobíme rychlostí (PAN_SPEED)
+        const deltaX = (e.clientX - startMouseX) * PAN_SPEED;
+        const deltaY = (e.clientY - startMouseY) * PAN_SPEED;
 
-        checkBoundaries(); // Tady hlídáme hranice při posunu
+        pannedX = startPannedX + deltaX;
+        pannedY = startPannedY + deltaY;
+
+        checkBoundaries();
         updateTransform();
     });
 
@@ -191,21 +190,30 @@ if (container) {
         isDragging = false;
         container.classList.remove('grabbing');
     });
+
+    // E) KLIKNUTÍ NA POZADÍ (Zavření)
+    container.addEventListener('click', (e) => {
+        // Pokud jsme zrovna táhli obrázkem (hasMoved), nechceme zavírat
+        if (hasMoved) return;
+
+        // Zavřít jen pokud klikneme na kontejner (černé pozadí), ne na obrázek
+        if (e.target === container) {
+            closeModal();
+        }
+    });
     
-    // E) DVOJKLIK (Rychlý zoom / reset)
+    // F) DVOJKLIK (Reset / Zoom)
     container.addEventListener('dblclick', (e) => {
         if (scale === 1) {
-            scale = 2.5; // Zoom in
+            scale = 2.5;
         } else {
-            scale = 1;   // Reset
-            pannedX = 0;
-            pannedY = 0;
+            scale = 1; pannedX = 0; pannedY = 0;
         }
         updateTransform();
     });
 }
 
-// Zavření klávesou ESC
+// Zavření ESC
 window.addEventListener('keydown', (e) => {
     if (e.key === "Escape") closeModal();
 });
