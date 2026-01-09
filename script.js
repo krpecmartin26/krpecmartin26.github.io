@@ -354,7 +354,7 @@ window.addEventListener('scroll', () => {
     }
 });
 /* =========================================
-   9. MOBILNÍ MENU & SCROLL SPY (NOVÉ)
+   9. MOBILNÍ MENU & SCROLL SPY (VYLEPŠENO)
    ========================================= */
 const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".nav-menu");
@@ -371,33 +371,43 @@ if (hamburger) {
 // 2. Zavření menu po kliknutí na odkaz
 if (navLinks) {
     navLinks.forEach(n => n.addEventListener("click", () => {
-        if(hamburger) hamburger.classList.remove("active");
-        if(navMenu) navMenu.classList.remove("active");
+        if (hamburger) hamburger.classList.remove("active");
+        if (navMenu) navMenu.classList.remove("active");
     }));
 }
 
-// 3. SCROLL SPY (Zvýrazňování v menu při scrollování)
+// 3. NOVÉ: Zavření menu kliknutím MIMO menu (klik do prázdna)
+document.addEventListener("click", (e) => {
+    // Pokud je menu otevřené A neklikli jsme na hamburger ANI na menu
+    if (navMenu && navMenu.classList.contains("active") && 
+        !hamburger.contains(e.target) && 
+        !navMenu.contains(e.target)) {
+        
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+    }
+});
+
+// 4. SCROLL SPY (Zvýrazňování v menu při scrollování)
 const sections = document.querySelectorAll("section");
 
 window.addEventListener("scroll", () => {
     let current = "";
     
-    // Zjistíme, která sekce je na obrazovce
     sections.forEach((section) => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
         
-        // Offset -150px, aby se odkaz přepnul trochu dřív, než sekce vyjede úplně nahoru
-        if (pageYOffset >= (sectionTop - 150)) {
+        // Offset 150px je ideální pro plynulé přepínání
+        if (window.scrollY >= (sectionTop - 150)) {
             current = section.getAttribute("id");
         }
     });
 
-    // Obarvíme příslušný odkaz
     navLinks.forEach((link) => {
         link.classList.remove("active");
-        // Pokud href odkazu obsahuje ID sekce (např #about obsahuje about)
-        if (link.getAttribute("href").includes(current)) {
+        // Pojistka: kontrolujeme, zda odkaz vůbec má href (pro jistotu)
+        if (link.getAttribute("href") && link.getAttribute("href").includes(current)) {
             link.classList.add("active");
         }
     });

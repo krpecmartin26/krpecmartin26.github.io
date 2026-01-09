@@ -137,49 +137,42 @@ ul {
 }
 
 /* =========================================
-   5. HLAVIČKA A NAVIGACE (FINAL - BUTTON STYLE)
+   5. HLAVIČKA A NAVIGACE (FINAL - PC I MOBIL)
    ========================================= */
 
 /* --- 1. GLOBÁLNÍ NASTAVENÍ DOJEZDŮ --- */
 section {
-    /* Tady nastavujeme, kde se stránka "zasekne", když klikneš v menu.
-       Aby nadpis nebyl schovaný pod lištou. */
-    scroll-margin-top: 110px; 
+    scroll-margin-top: 140px; 
 }
 
 /* --- 2. HLAVIČKA (HEADER) --- */
 header, .main-header {
     min-height: 100vh;
     width: 100%;
-    
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Na PC centrujeme svisle */
+    justify-content: center;
     align-items: center;
     text-align: center;
     
-    /* Odsazení textu od horní lišty */
-    padding-top: 80px; 
+    padding-top: 60px; 
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
     
-    /* POZADÍ (Cyber Steel) */
     background: radial-gradient(circle at center, #333333 0%, #111111 100%);
     color: #ffffff;
-    
     overflow: hidden;
     margin: 0;
 }
 
-/* Úprava pro světlý režim */
 body.light-mode header, 
 body.light-mode .main-header {
     background: radial-gradient(circle at center, #e0e0e0 0%, #cfcfcf 100%);
     color: #333333;
 }
 
-/* --- 3. NAVIGAČNÍ LIŠTA --- */
+/* --- 3. NAVIGAČNÍ LIŠTA (NAVBAR) --- */
 #navbar {
     position: fixed;
     top: 0;
@@ -189,75 +182,68 @@ body.light-mode .main-header {
     padding: 0 30px; 
     
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between; /* Hamburger vlevo, Tlačítko vpravo */
     align-items: center;
     
-    z-index: 1000;
-    background: var(--accent); /* Modrá */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2000; /* Musí být hodně vysoko! */
+    background: var(--accent);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 
 /* Tlačítko Theme (Měsíc) */
 .theme-btn-nav {
-    background: none;
-    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     color: #fff;
     cursor: pointer;
     font-size: 18px;
-    padding: 8px 12px;
-    border-radius: 5px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
     transition: all 0.3s;
-    margin-left: 20px;
-    display: flex;
+    /* Důležité: Na mobilu ho chceme vpravo, menu ho nesmí překrýt */
+    position: relative; 
+    z-index: 2002; 
 }
-
 .theme-btn-nav:hover {
     background: rgba(255,255,255,0.2);
-    transform: rotate(15deg);
 }
 
-/* --- 4. ODKAZY (TLAČÍTKA) --- */
+/* --- 4. ODKAZY (MENU) --- */
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 15px;
+    gap: 10px;
     margin: 0;
     padding: 0;
-    margin-left: auto;
+    margin-left: auto; /* Na PC zarovnáno doprava k tlačítku */
+    margin-right: 20px; /* Odstup od tlačítka */
 }
 
 .nav-link {
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    
-    /* Vzhled tlačítka (pilulka) */
-    padding: 8px 16px;       
-    border-radius: 20px;     
+    padding: 10px 20px;       
+    border-radius: 50px;     
     transition: all 0.3s ease;
     border: 1px solid transparent; 
 }
 
-/* Efekt po najetí */
 .nav-link:hover, .nav-link.active {
     background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
-/* Zrušení starého podtržítka */
-.nav-link.active::after {
-    display: none; 
-}
-
-/* --- 5. HAMBURGER (MOBIL) --- */
+/* --- 5. HAMBURGER (MOBILNÍ IKONA) --- */
 .hamburger {
-    display: none;
+    display: none; /* Na PC skryto */
     cursor: pointer;
+    z-index: 2002; /* Musí být nad otevřeným menu! */
 }
 .bar {
     display: block;
@@ -265,6 +251,7 @@ body.light-mode .main-header {
     height: 3px;
     margin: 5px auto;
     background-color: #fff;
+    border-radius: 3px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -272,67 +259,67 @@ body.light-mode .main-header {
 @media (max-width: 768px) {
     #navbar {
         padding: 0 20px;
+        height: 60px;
     }
 
-    /* Úprava Headeru na mobilu */
-    header, .main-header {
-        /* Posuneme text níž, aby nebyl pod lištou */
-        padding-top: 110px; 
-        /* Text začne nahoře, ne uprostřed */
-        justify-content: flex-start; 
-    }
-
+    /* Hamburger se ukáže */
     .hamburger {
         display: block;
-        z-index: 1002;
     }
 
-    .theme-btn-nav {
-        z-index: 1002;
-        border: none;
-        font-size: 22px;
-    }
-
-    /* Animace křížku */
+    /* Animace Hamburgeru na Křížek */
     .hamburger.active .bar:nth-child(2) { opacity: 0; }
     .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Rozbalovací menu */
+    /* MENU - MOBILNÍ VZHLED */
     .nav-menu {
-        position: fixed;
-        left: 100%; 
+        position: fixed; /* Vytrhneme z lišty */
+        left: 100%;      /* Schováme doprava mimo obrazovku */
         top: 0;
         
         flex-direction: column;
-        justify-content: flex-start; 
+        justify-content: flex-start; /* Odkazy začnou nahoře */
         align-items: center;
         
-        background-color: #1a1a1a; 
+        background-color: #1a1a1a; /* Tmavé pozadí přes celý displej */
         width: 100%;
         height: 100vh;
         
-        padding-top: 120px; 
+        padding-top: 100px; /* Aby první odkaz nebyl pod lištou */
+        margin: 0; /* Reset marginů z PC verze */
         gap: 20px;
-        transition: 0.4s ease;
-        z-index: 1001;
+        
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Plynulý výjezd */
+        z-index: 2001; /* Pod hamburgerem, ale nad vším ostatním */
     }
 
+    /* Třída .active (přidá ji Javascript) menu vysune */
     .nav-menu.active {
         left: 0; 
+        box-shadow: -5px 0 20px rgba(0,0,0,0.5);
     }
     
-    /* Tlačítka v mobilním menu */
+    /* Větší tlačítka pro prsty */
     .nav-link {
         font-size: 18px;
-        width: 80%; /* Širší tlačítka na dotyk */
+        width: 80%; 
         text-align: center;
-        padding: 12px;
-        border-radius: 8px; /* Hranatější rohy */
+        padding: 15px;
+        border-radius: 12px; 
+        background: rgba(255,255,255,0.05);
+        display: block;
     }
     
-    .nav-link:hover {
-        transform: none; /* Na mobilu neskákat */
+    .nav-link:hover, .nav-link.active {
+        background: var(--accent);
+        transform: none; 
+    }
+    
+    /* Header úprava pro mobil */
+    header, .main-header {
+        padding-top: 130px;
+        justify-content: flex-start;
     }
 }
 /* =========================================
