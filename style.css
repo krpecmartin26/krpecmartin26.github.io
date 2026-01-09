@@ -31,6 +31,86 @@ html, body {
     
     --border: #333;
     --shadow: rgba(0,0,0,0.5);
+    /* --- TMAVÝ KONTAKTNÍ FORMULÁŘ --- */
+
+/* Celá sekce (pozadí okolo formuláře) */
+.contact-section {
+    padding: 60px 20px;
+    background-color: #0d1117; /* Velmi tmavá (skoro černá) - ladí k patičce */
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #c9d1d9; /* Světle šedý text */
+}
+
+.contact-section h2 {
+    margin-bottom: 10px;
+    color: #ffffff; /* Bílý nadpis */
+}
+
+/* Samotná krabička formuláře */
+.contact-form {
+    max-width: 500px;
+    margin: 30px auto 0;
+    background-color: #161b22; /* Tmavě šedá krabička (GitHub styl) */
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #30363d; /* Jemný obrys */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Tmavý stín */
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #c9d1d9; /* Světle šedý popisek */
+}
+
+/* Políčka pro psaní (Inputy) */
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d1117; /* Černé pozadí uvnitř políčka */
+    border: 1px solid #30363d; /* Tmavý rámeček */
+    border-radius: 6px;
+    font-size: 16px;
+    color: #ffffff; /* Bílý text, když píšeš */
+    box-sizing: border-box;
+}
+
+/* Změna barvy rámečku, když do něj klikneš */
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #58a6ff; /* Modrá barva (GitHub styl) */
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Tlačítko Odeslat */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #238636; /* Zelená (jako na GitHubu) - výrazná */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2ea043; /* Světlejší zelená po najetí */
+}
 }
 
 /* --- SVĚTLÝ REŽIM (MODERNÍ TECH - BAREVNĚJŠÍ) --- */
