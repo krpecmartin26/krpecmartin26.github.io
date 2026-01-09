@@ -369,12 +369,17 @@ body.light-mode .main-header {
         border-radius: 0; /* Žádné kulaté rohy */
     }
 
-    /* Aktivní odkaz na mobilu */
     .nav-link.active {
-        color: var(--accent) !important; /* Zmodrá text */
-        background: rgba(255, 255, 255, 0.05) !important; /* Jemňoučké podbarvení */
+        color: var(--accent) !important; /* Jen zmodrá písmo */
+        background: transparent !important; /* ŽÁDNÉ POZADÍ */
+        box-shadow: none !important;
+        border: none !important;
     }
     
+    /* Pro jistotu zrušíme pozadí i při hoveru na mobilu */
+    .nav-link:hover, .nav-link:focus {
+        background: transparent !important;
+    }
     /* Zrušíme podtržítko z PC verze, na mobilu to nevypadá dobře */
     .nav-link.active::after {
         display: none;

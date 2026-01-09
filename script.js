@@ -219,48 +219,42 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* =========================================
-   4. SCROLL SPY & PLYNULÝ SCROLL
+   4. PLYNULÝ SCROLL S OFFSETEM (OPRAVA)
    ========================================= */
-
-
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Vypneme standardní skok
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-            const targetPosition = targetElement.offsetTop;
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
+            // 1. Změříme, kde sekce je (vzhledem k oknu)
+            const elementPosition = targetElement.getBoundingClientRect().top;
             
-            // 1. ZMĚNA: Zkrácení času z 1500 na 1000ms (nebo 800ms pro svižnější web)
-            const duration = 700; 
-            let start = null;
+            // 2. Kde jsme teď
+            const startPosition = window.pageYOffset;
+            
+            // 3. DŮLEŽITÉ: Výška hlavičky + malá rezerva (např. 85px)
+            // Toto zajistí, že nadpis nebude schovaný pod lištou!
+            const headerOffset = 85; 
+            
+            // 4. Výpočet přesné cílové pozice
+            const offsetPosition = elementPosition + startPosition - headerOffset;
 
-            function step(timestamp) {
-                if (!start) start = timestamp;
-                const progress = timestamp - start;
-                
-                // Ošetření, aby animace nepřejela čas (občas to dělalo skoky na konci)
-                const timePassed = Math.min(progress, duration);
-
-                const run = ease(timePassed, startPosition, distance, duration);
-                window.scrollTo(0, run);
-                
-                if (progress < duration) window.requestAnimationFrame(step);
+            // 5. Provedeme posun
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+            
+            // 6. Pokud je otevřené mobilní menu, zavřeme ho
+            // (Aby nezaclánělo výhled po kliknutí)
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+            if (hamburger && navMenu && navMenu.classList.contains("active")) {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
             }
-
-            // 2. ZMĚNA: Funkce easeOutCubic
-            // Rychlý start, plynulé zpomalování ke konci.
-            // Žádné zrychlování uprostřed.
-            function ease(t, b, c, d) {
-                t /= d;
-                t--;
-                return c * (t * t * t + 1) + b;
-            }
-
-            window.requestAnimationFrame(step);
         }
     });
 });
