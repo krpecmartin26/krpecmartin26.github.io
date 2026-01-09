@@ -8,10 +8,17 @@
 }
 
 html, body {
-    width: 100%;
+   width: 100%;
     max-width: 100vw;       /* Maximální šířka je šířka okna */
     overflow-x: hidden;     /* Ořízne vše, co přečuhuje */
     position: relative;
+
+    /* 👇 TOTO TAM TEĎ NEMÁŠ A PROTO JE TO BÍLÉ 👇 */
+    background-color: var(--bg-main); 
+    color: var(--text-main);
+    
+    /* Plynulý přechod při změně tématu */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* =========================================
