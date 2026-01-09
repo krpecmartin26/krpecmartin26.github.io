@@ -137,62 +137,58 @@ ul {
 }
 
 /* =========================================
-   5. NOVÁ NAVIGACE (RESPONZIVNÍ)
+   5. NOVÁ NAVIGACE (OPRAVENÁ - MODRÁ)
    ========================================= */
+/* 1. Odsazení celého webu dolů, aby se obsah neschoval pod lištu */
+body {
+    padding-top: 70px; 
+}
+
+/* 2. Samotná lišta */
 #navbar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    padding: 20px 50px;
+    right: 0; /* ZMĚNA: Toto zajistí, že lišta nikdy nepřeteče doprava */
+    height: 70px; /* Pevná výška */
+    
+    padding: 0 30px; /* Odsazení obsahu uvnitř lišty */
+    box-sizing: border-box; /* Pojistka pro padding */
+    
     display: flex;
-    justify-content: space-between; /* Logo vlevo, menu vpravo */
+    justify-content: flex-end; /* Vše zarovnáme doprava */
     align-items: center;
-    z-index: 1000; /* Nad vším ostatním */
-    background: rgba(26, 26, 26, 0.8); /* Jemně průhledná černá */
-    backdrop-filter: blur(10px); /* Rozmazání pozadí pod lištou */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    
+    z-index: 1000;
+    background: var(--accent); /* MODRÁ BARVA */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Logo vlevo */
-.nav-logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--text-main);
-    text-decoration: none;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Seznam odkazů */
+/* 3. Odkazy */
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px; /* Mezery mezi odkazy */
+    gap: 30px;
     margin: 0;
     padding: 0;
 }
 
 .nav-link {
-    color: var(--text-muted);
+    color: #ffffff; /* Bílý text na modrém */
     text-decoration: none;
-    font-weight: 500;
-    font-size: 16px;
-    transition: color 0.3s;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s;
     position: relative;
 }
 
-/* Efekt po najetí */
 .nav-link:hover {
-    color: var(--text-main);
+    opacity: 0.8;
 }
 
-/* AKTIVNÍ STAV (Zvýraznění sekce) */
-.nav-link.active {
-    color: var(--accent); /* Zmodrá */
-}
-
-/* Podtržítko pro aktivní stav */
+/* Aktivní odkaz (bílé podtržítko) */
 .nav-link.active::after {
     content: '';
     position: absolute;
@@ -200,14 +196,14 @@ ul {
     height: 2px;
     bottom: -5px;
     left: 0;
-    background-color: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
+    background-color: #fff;
 }
 
-/* Hamburger (skrytý na PC) */
+/* 4. Hamburger (Mobil) */
 .hamburger {
     display: none;
     cursor: pointer;
+    margin-left: 20px; /* Odstup od kraje */
 }
 
 .bar {
@@ -216,36 +212,42 @@ ul {
     height: 3px;
     margin: 5px auto;
     transition: all 0.3s ease-in-out;
-    background-color: var(--text-main);
+    background-color: #fff; /* Bílé čárky */
 }
 
-/* --- MOBILNÍ VERZE (max-width: 768px) --- */
+/* --- MOBILNÍ VERZE --- */
 @media (max-width: 768px) {
     #navbar {
-        padding: 15px 20px;
+        padding: 0 20px; /* Menší padding na mobilu */
     }
 
     .hamburger {
         display: block; /* Ukázat hamburger */
+        z-index: 1002;
     }
 
+    /* Animace křížku */
     .hamburger.active .bar:nth-child(2) { opacity: 0; }
     .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+    /* Rozbalovací menu */
     .nav-menu {
         position: fixed;
-        left: -100%; /* Schované vlevo mimo obrazovku */
-        top: 60px; /* Pod lištou */
+        left: 100%; /* Schované vpravo */
+        top: 0;
         flex-direction: column;
-        background-color: #1a1a1a;
+        justify-content: center; /* Vycentrovat odkazy svisle */
+        align-items: center;
+        
+        background-color: #1a1a1a; /* Tmavé pozadí menu */
         width: 100%;
-        height: 100vh; /* Přes celou výšku */
-        text-align: center;
-        transition: 0.3s;
-        padding-top: 50px;
-        gap: 40px;
-        border-right: 1px solid var(--accent);
+        height: 100vh;
+        
+        transition: 0.4s ease;
+        padding: 0;
+        gap: 50px;
+        z-index: 1001;
     }
 
     .nav-menu.active {
@@ -253,19 +255,15 @@ ul {
     }
     
     .nav-link {
-        font-size: 24px; /* Větší písmo na mobilu */
+        font-size: 24px; /* Velké písmo */
+        color: var(--text-main); /* V menu bude text světlý/tmavý podle tématu */
     }
 }
-
-/* Světlý režim - úpravy pozadí */
-body.light-mode #navbar {
-    background: rgba(255, 255, 255, 0.9);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+/* Zajistí, že při kliknutí na odkaz se stránka posune o kousek níž, 
+   aby nadpis nebyl schovaný pod lištou */
+section {
+    scroll-margin-top: 90px;
 }
-body.light-mode .nav-menu {
-    background-color: #f4f4f4;
-}
-
 /* =========================================
    6. SKILL TAGS
    ========================================= */
